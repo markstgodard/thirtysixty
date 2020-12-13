@@ -57,7 +57,6 @@ func main() {
 			select {
 			case <-ticker.C:
 
-				// TODO: currently sequential, could move to channels
 				for _, url := range urls {
 					// fetch
 					body, err := fetcher.Fetch(url)
