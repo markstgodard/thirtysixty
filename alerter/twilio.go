@@ -24,7 +24,6 @@ func NewTwilioAlerter(accountSID, authToken, from, to string) *TwilioAlerter {
 }
 
 func (t *TwilioAlerter) Alert(info Info) error {
-
 	log.WithFields(log.Fields{
 		"product":   info.ProductURL,
 		"available": info.Available,
@@ -35,14 +34,10 @@ func (t *TwilioAlerter) Alert(info Info) error {
 	if info.Available {
 		say := fmt.Sprintf("Product now available: %f %s", info.Price, info.ProductURL)
 
-		msg, err := t.client.Messages.SendMessage(t.from, t.to, say, nil)
+		_, err := t.client.Messages.SendMessage(t.from, t.to, say, nil)
 		if err != nil {
-			log.Error(err)
+			return err
 		}
-
-		fmt.Printf("msg: %#v\n", msg)
-
 	}
-
 	return nil
 }
